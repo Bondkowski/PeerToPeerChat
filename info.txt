@@ -1,0 +1,41 @@
+Peer-to-peer chat version 2.1
+
+Peer.jar is ready to deploy. You may use it to test chat.
+
+Chat consists of three classes, which run in two different threads. ChatNode and Sender in main thread,
+Receiver in additional thread. In this version of chat I united server and user in one.
+Chat uses UDP port 9999 to receive messages and dynamic UDP port to send them.
+
+After start you need to enter Username, then choose IP of your host that you will use (chat will show you a list of all
+IPs of your computer(it was done in testing purposes, but I decided to keep this feature)), then you need to enter
+Initial IP - known IP of host which already run the chat.
+Chat will join the network through Initial Host and receive list of all host's addresses in reply.
+Initial Host will propagate IP of the new host to all known hosts.
+When new host arrives the network - all hosts receive its IP and show special message to user.
+
+Node ID assigns automatically as random number from 0 to 10'000'000 and is shown when you start chat.
+
+To send the message you need to type remote node's ID then type message after a space.
+
+There are three "service commands" you can type in:
+
+"---all" - send message to all users in chat
+"---list" - print the list of all node's IDs and addresses known to your node.
+"---exit" - exit chat. When you use this command node sends "leaving message".
+
+I did not go along with your original specification described on website, but took many things from it, including
+the format of most of the messages.
+
+Shortcomings of this version:
+1. It does not check Initial IP entered by user properly - if user enters letters, the exception will shutdown the chat.
+2. The list of addresses has no good methods to maintain. For example if node leave without "leaving message" and
+rejoin, its IP will be mentioned in list twice, hence it will receive broadcasts twice and so on. There is no method
+to renew table also.
+3. If run in windows's command line - user cannot see what he types... In Linux works fine.
+4. Typing remote node's ID obviously not the best way to use chat. UI should be created. It will solve the problem
+as well as some other.
+5. There are not enough comments in the code - sorry. I started from the scratch on Monday, because I did not like first
+version with users and servers, and had no a lot of time to do all the small details. You may also find a lot of
+troublshooting lines in code which are commented out currently.
+
+Thanks for reading.
